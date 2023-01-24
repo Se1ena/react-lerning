@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types';
 import {format} from 'date-fns';
-import { isTSMethodSignature } from '@babel/types';
+//import { isTSMethodSignature } from '@babel/types';
 import { BaseTable, THead, Th, Tr, Td } from './CryptoHistory.styled';
 
-export const CryptoHistory = ({data}) => {
+export const CryptoHistory = ({items}) => {
   return <BaseTable>
   <THead>
     <tr>
@@ -14,7 +15,7 @@ export const CryptoHistory = ({data}) => {
   </THead>
 
   <tbody>
-    {data.map(({id, price, amount, date}, index)=>
+    {items.map(({id, price, amount, date}, index)=>
     (<Tr key={id}>
       <Td>{index+1}</Td>
       <Td>{price}</Td>
@@ -24,3 +25,14 @@ export const CryptoHistory = ({data}) => {
   </tbody>
 </BaseTable>
 };
+
+CryptoHistory.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      price: PropTypes.number.isRequired,
+      amount: PropTypes.number.isRequired,
+      date: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+}
